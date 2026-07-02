@@ -63,6 +63,44 @@
   }
   .link:hover{border-color:var(--rojo)}
 
+  /* ================= PRELOADER ================= */
+  #precarga{
+    position:fixed;inset:0;z-index:999;background:var(--negro);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px;
+    transition:opacity .7s ease,visibility .7s;
+  }
+  #precarga.fuera{opacity:0;visibility:hidden;pointer-events:none}
+  #precarga .grua path,#precarga .grua rect{
+    stroke:rgba(255,255,255,.85);
+    stroke-dasharray:600;stroke-dashoffset:600;
+    animation:dibujar 2.4s ease forwards;
+  }
+  #precarga .grua path:nth-child(2){animation-delay:.25s}
+  #precarga .grua path:nth-child(3){animation-delay:.55s}
+  #precarga .grua path:nth-child(4){animation-delay:.75s}
+  #precarga .grua path:nth-child(5){animation-delay:.95s}
+  #precarga .grua path:nth-child(6){animation-delay:1.15s}
+  #precarga .grua rect{animation-delay:1.3s}
+  #precarga .grua path:nth-child(8){animation-delay:1.45s}
+  #precarga .grua path:nth-child(9){animation-delay:1.65s}
+  @keyframes dibujar{to{stroke-dashoffset:0}}
+  #precarga .logo-pre{height:24px;width:auto;opacity:0;animation:aparecer .8s ease .9s forwards}
+  @keyframes aparecer{to{opacity:1}}
+  #precarga .barra{
+    width:170px;height:2.5px;background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden;
+  }
+  #precarga .barra i{
+    display:block;height:100%;width:0;border-radius:3px;
+    background:linear-gradient(90deg,var(--rojo),var(--verde));
+    animation:llenar 2.2s ease-out forwards;
+  }
+  @keyframes llenar{to{width:100%}}
+  @media (prefers-reduced-motion: reduce){
+    #precarga .grua path,#precarga .grua rect{animation:none;stroke-dashoffset:0}
+    #precarga .barra i{animation:none;width:100%}
+    #precarga .logo-pre{animation:none;opacity:1}
+  }
+
   /* ================= HEADER ================= */
   header{
     position:fixed;top:0;left:0;right:0;z-index:90;color:#fff;
@@ -113,7 +151,7 @@
   /* ================= HERO (Acciona) ================= */
   .hero{
     position:relative;min-height:100svh;display:flex;align-items:center;
-    color:#fff;overflow:hidden;padding:110px 0 70px;background:var(--negro);
+    color:#fff;overflow:hidden;padding:170px 0 56px;background:var(--negro);
   }
   .hero video,.hero .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .hero .poster{background:url('https://images.pexels.com/videos/7025003/city-construction-site-day-metropolis-7025003.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover}
@@ -344,6 +382,23 @@
 </style>
 </head>
 <body>
+
+<!-- ================= PRELOADER ================= -->
+<div id="precarga" role="status" aria-label="Cargando">
+  <svg class="grua" viewBox="0 0 220 160" width="150" height="110" fill="none" stroke-width="1.6" stroke-linecap="round">
+    <path d="M96 150 V32 M110 150 V32"/>
+    <path d="M96 150 L110 136 M96 136 L110 122 M96 122 L110 108 M96 108 L110 94 M96 94 L110 80 M96 80 L110 66 M96 66 L110 52 M96 52 L110 38"/>
+    <path d="M40 32 H206"/>
+    <path d="M40 40 H206 M40 32 V40 M206 32 V40"/>
+    <path d="M103 32 L103 12 L200 32 M103 12 L46 32"/>
+    <path d="M60 40 L70 32 M120 40 L130 32 M150 40 L160 32 M180 40 L190 32"/>
+    <rect x="42" y="40" width="20" height="13"/>
+    <path d="M168 40 V96"/>
+    <path d="M168 96 l-6 8 h12 z"/>
+  </svg>
+  <img class="logo-pre" src="https://raw.githubusercontent.com/gmediard/estrella/main/estrella-logo-blanco.png" alt="Grupo ESTRELLA">
+  <div class="barra"><i></i></div>
+</div>
 
 <!-- ================= HEADER ================= -->
 <header id="cabecera">
@@ -727,6 +782,20 @@
 </footer>
 
 <script>
+  // ---------- Preloader ----------
+  (function(){
+    const pre = document.getElementById('precarga');
+    const t0 = performance.now();
+    const MIN = 2300; // ms mínimos para que se aprecie la animación
+    const salir = () => {
+      const falta = Math.max(0, MIN - (performance.now() - t0));
+      setTimeout(()=>{ pre.classList.add('fuera'); setTimeout(()=>pre.remove(), 800); }, falta);
+    };
+    if(document.readyState === 'complete') salir();
+    else window.addEventListener('load', salir);
+    setTimeout(salir, 5000); // red de seguridad: nunca más de 5s
+  })();
+
   // ---------- Header sólido ----------
   const cab = document.getElementById('cabecera');
   const onScroll = () => cab.classList.toggle('solid', window.scrollY > 40);
