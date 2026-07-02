@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grupo ESTRELLA — Construcción para el desarrollo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --negro:#0D0F12;
+    --carbon:#15181D;
+    --blanco:#FFFFFF;
+    --hueso:#F7F7F5;
+    --tinta:#1E2126;
+    --gris:#6B7076;
+    --gris-claro:#C9C9C9;
+    --rojo:#BE1E3C;
+    --verde:#00783C;
+    --azul:#146EA0;
+    --linea:#E4E4E1;
+    --linea-osc:rgba(255,255,255,.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Quicksand',sans-serif;font-weight:400;
+    background:var(--blanco);color:var(--tinta);line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1300px;margin:0 auto;padding:0 44px}
+  @media(max-width:640px){.wrap{padding:0 22px}}
+  section{padding:110px 0}
+  .tag{
+    display:inline-flex;align-items:center;gap:12px;
+    font-size:11px;letter-spacing:.32em;text-transform:uppercase;font-weight:600;color:var(--gris);
+  }
+  .tag::before{content:"";width:30px;height:2px;background:var(--rojo);border-radius:2px}
+  h2.titulo{font-size:clamp(30px,3.8vw,50px);font-weight:300;line-height:1.18;margin-top:22px;letter-spacing:-.01em}
+  h2.titulo b{font-weight:600}
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity 1s ease,transform 1s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    video{display:none}
+    .rotor span{position:static !important;opacity:1 !important}
+  }
+  .btn{
+    display:inline-block;font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+    font-weight:600;padding:16px 36px;border-radius:999px;transition:all .3s;
+  }
+  .btn.rojo{background:var(--rojo);color:#fff}
+  .btn.rojo:hover{background:var(--negro)}
+  .btn.blanco{background:#fff;color:var(--negro)}
+  .btn.blanco:hover{background:var(--rojo);color:#fff}
+  .btn.verde{background:var(--verde);color:#fff}
+  .btn.verde:hover{background:var(--negro)}
+  .link{
+    font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;
+    border-bottom:2px solid var(--gris-claro);padding-bottom:6px;transition:border-color .3s;
+  }
+  .link:hover{border-color:var(--rojo)}
+
+  /* ================= HEADER ================= */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:90;color:#fff;
+    transition:background .4s,border-color .4s;border-bottom:1px solid transparent;
+  }
+  header.solid{background:rgba(13,15,18,.92);backdrop-filter:blur(16px);border-color:var(--linea-osc)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:86px}
+  .logo{display:flex;align-items:center;gap:11px;font-size:16px;font-weight:500;letter-spacing:.1em}
+  .logo b{font-weight:700}
+  .menu{display:flex;font-size:13.5px;font-weight:500}
+  .menu > div{position:relative;padding:33px 15px;cursor:pointer;color:rgba(255,255,255,.8);transition:color .25s}
+  .menu > div:hover{color:#fff}
+  .menu > div > span::after{content:"";display:block;width:0;height:2px;background:var(--rojo);border-radius:2px;transition:width .3s;margin-top:4px}
+  .menu > div:hover > span::after{width:100%}
+  .drop{
+    position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(10px);
+    min-width:300px;background:var(--negro);border:1px solid var(--linea-osc);border-radius:14px;
+    padding:24px 28px;opacity:0;visibility:hidden;transition:all .3s ease;
+  }
+  .menu > div:hover .drop{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+  .drop a{
+    display:flex;justify-content:space-between;align-items:baseline;gap:26px;
+    padding:10px 0;border-bottom:1px solid rgba(255,255,255,.07);
+    font-size:13.5px;color:rgba(255,255,255,.78);white-space:nowrap;transition:all .25s;font-weight:500;
+  }
+  .drop a:hover{color:#fff;padding-left:8px}
+  .drop a small{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);font-weight:600}
+  .drop.ancho{min-width:580px;display:grid;grid-template-columns:1fr 1fr;gap:2px 36px}
+  .menu > div:hover .drop.ancho{display:grid}
+  .drop .drop-titulo{grid-column:1/-1;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.4);padding-bottom:12px;font-weight:600}
+  .nav-cta{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;border:1.5px solid rgba(255,255,255,.45);padding:12px 26px;border-radius:999px;transition:all .3s}
+  .nav-cta:hover{background:#fff;color:var(--negro);border-color:#fff}
+  .burger{display:none;flex-direction:column;gap:6px;background:none;border:none;cursor:pointer;padding:8px}
+  .burger span{width:26px;height:2px;background:#fff;border-radius:2px}
+  @media(max-width:1120px){.menu,.nav-cta{display:none}.burger{display:flex}}
+  .movil{
+    position:fixed;inset:0;background:var(--negro);color:#fff;z-index:100;
+    padding:110px 34px 40px;overflow-y:auto;transform:translateX(100%);transition:transform .45s cubic-bezier(.7,0,.3,1);
+  }
+  .movil.abierto{transform:none}
+  .movil .cerrar{position:absolute;top:28px;right:26px;background:none;border:none;color:#fff;font-size:28px;cursor:pointer;font-weight:300}
+  .movil details{border-bottom:1px solid var(--linea-osc)}
+  .movil summary{font-size:21px;font-weight:400;padding:20px 0;cursor:pointer;list-style:none;display:flex;justify-content:space-between}
+  .movil summary::after{content:"+";color:var(--rojo);font-weight:400}
+  .movil details[open] summary::after{content:"–"}
+  .movil details a{display:block;padding:9px 0 9px 14px;font-size:15px;color:rgba(255,255,255,.7)}
+
+  /* ================= HERO (Acciona) ================= */
+  .hero{
+    position:relative;min-height:100svh;display:flex;align-items:flex-end;
+    color:#fff;overflow:hidden;padding:0 0 100px;background:var(--negro);
+  }
+  .hero video,.hero .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .hero .poster{background:url('https://images.pexels.com/videos/7025003/city-construction-site-day-metropolis-7025003.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover}
+  .hero::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(13,15,18,.94) 0%,rgba(13,15,18,.3) 50%,rgba(13,15,18,.5) 100%)}
+  .hero .wrap{position:relative;z-index:2;width:100%}
+  .hero .sello{
+    display:inline-flex;align-items:center;gap:12px;font-size:11px;letter-spacing:.32em;
+    text-transform:uppercase;font-weight:600;color:rgba(255,255,255,.75);
+    border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:10px 22px;
+  }
+  .hero h1{
+    font-size:clamp(42px,6.6vw,96px);font-weight:300;line-height:1.06;
+    letter-spacing:-.02em;margin:34px 0 30px;max-width:16ch;
+  }
+  .rotor{display:inline-block;position:relative;font-weight:600;color:#fff;min-width:7ch}
+  .rotor span{
+    position:absolute;left:0;top:0;opacity:0;transform:translateY(14px);
+    transition:opacity .5s,transform .5s;white-space:nowrap;
+  }
+  .rotor span.activa{opacity:1;transform:none;position:relative}
+  .rotor::after{content:"";position:absolute;left:0;bottom:-6px;width:100%;height:3px;background:var(--rojo);border-radius:3px}
+  .hero p{max-width:540px;font-size:17.5px;color:rgba(255,255,255,.78);margin-bottom:46px;font-weight:400}
+  .hero-links{display:flex;gap:34px;align-items:center;flex-wrap:wrap}
+  .link-luz{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:#fff;border-bottom:2px solid rgba(255,255,255,.35);padding-bottom:6px;transition:border-color .3s}
+  .link-luz:hover{border-color:var(--rojo)}
+
+  /* ================= CIFRAS (VINCI) ================= */
+  .cifras{background:var(--negro);color:#fff;padding:0 0 100px}
+  .cifras-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--linea-osc)}
+  .cifra{padding:48px 30px 0;border-left:1px solid var(--linea-osc)}
+  .cifra:first-child{border-left:none;padding-left:0}
+  .cifra .num{font-size:58px;font-weight:300;line-height:1;letter-spacing:-.02em}
+  .cifra .num i{font-style:normal;color:var(--rojo);font-weight:400}
+  .cifra .lbl{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:16px;font-weight:600}
+  @media(max-width:860px){.cifras-grid{grid-template-columns:1fr 1fr}.cifra{padding:36px 20px 0}}
+
+  /* ================= PROPÓSITO (Votorantim) ================= */
+  .proposito{background:var(--hueso)}
+  .proposito .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:80px;align-items:start}
+  .proposito p.grande{font-size:clamp(20px,2vw,25px);font-weight:400;line-height:1.6;color:var(--tinta);margin-top:26px}
+  .valores{display:flex;flex-direction:column;gap:0;border-top:2px solid var(--tinta);margin-top:10px}
+  .valor{padding:28px 6px;border-bottom:1px solid var(--linea);display:grid;grid-template-columns:56px 1fr;gap:22px;align-items:start;transition:padding .3s}
+  .valor:hover{padding-left:18px}
+  .valor .icono{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+  .valor:nth-child(1) .icono{background:rgba(190,30,60,.1);color:var(--rojo)}
+  .valor:nth-child(2) .icono{background:rgba(0,120,60,.1);color:var(--verde)}
+  .valor:nth-child(3) .icono{background:rgba(20,110,160,.1);color:var(--azul)}
+  .valor h4{font-size:17px;font-weight:600;margin-bottom:4px}
+  .valor p{font-size:14px;color:var(--gris)}
+  @media(max-width:900px){.proposito .wrap{grid-template-columns:1fr;gap:40px}}
+
+  /* ================= PORTAFOLIO (Techint) ================= */
+  .portafolio{background:var(--blanco)}
+  .cabeza{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:60px}
+  .logo-muro{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--linea);border-left:1px solid var(--linea)}
+  .celda{
+    position:relative;border-right:1px solid var(--linea);border-bottom:1px solid var(--linea);
+    min-height:240px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:0;padding:38px 30px;transition:background .4s;text-align:center;overflow:hidden;
+  }
+  .celda:hover{background:var(--hueso)}
+  .wm{
+    font-family:'Oswald',sans-serif;text-transform:uppercase;color:#9B9B9B;
+    line-height:1;transition:color .4s,transform .45s cubic-bezier(.3,.7,.3,1);
+  }
+  .celda:hover .wm{color:var(--tinta);transform:translateY(-14px)}
+  .wm .sobre{display:block;font-size:10px;letter-spacing:.34em;font-weight:600;color:#BDBDBD;margin-bottom:6px;transition:color .4s}
+  .celda:hover .wm .sobre{color:var(--rojo)}
+  .wm .nombre{font-size:29px;font-weight:600;letter-spacing:.13em}
+  .celda .hover-info{
+    display:flex;flex-direction:column;align-items:center;gap:16px;
+    max-height:0;opacity:0;transform:translateY(10px);
+    transition:max-height .45s ease,opacity .45s ease,transform .45s ease;
+  }
+  .celda:hover .hover-info{max-height:160px;opacity:1;transform:none;margin-top:4px}
+  .celda .rol{font-size:13px;color:var(--gris);line-height:1.5;max-width:34ch;font-weight:500}
+  .celda .mini-btn{
+    font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;
+    color:#fff;background:var(--rojo);padding:10px 22px;border-radius:999px;transition:background .3s;
+  }
+  .celda:hover .mini-btn:hover{background:var(--negro)}
+  .celda .estrellita{position:absolute;top:16px;right:18px;width:12px;height:12px;opacity:0;transition:opacity .4s}
+  .celda:hover .estrellita{opacity:1}
+  @media(max-width:900px){.logo-muro{grid-template-columns:1fr 1fr}.wm .nombre{font-size:23px}}
+  @media(max-width:560px){
+    .logo-muro{grid-template-columns:1fr}
+    .celda{min-height:0;padding:30px 24px}
+    /* en táctil no hay hover: mostrar info siempre, compacta */
+    .celda .hover-info{max-height:none;opacity:1;transform:none;margin-top:14px}
+    .celda .wm{color:var(--tinta)}
+  }
+
+  /* ================= PRESENCIA (Webuild) ================= */
+  .presencia{background:var(--carbon);color:#fff;padding:90px 0}
+  .presencia .wrap{display:grid;grid-template-columns:1fr 1.4fr;gap:70px;align-items:center}
+  .presencia h2{font-size:clamp(26px,3vw,40px);font-weight:300;line-height:1.2;margin-top:22px}
+  .presencia h2 b{font-weight:600}
+  .presencia .tag{color:rgba(255,255,255,.55)}
+  .paises{display:flex;flex-wrap:wrap;gap:12px}
+  .pais{
+    font-size:13.5px;font-weight:500;padding:12px 22px;border:1px solid var(--linea-osc);
+    border-radius:999px;color:rgba(255,255,255,.8);transition:all .3s;
+  }
+  .pais:hover{border-color:var(--rojo);color:#fff;transform:translateY(-2px)}
+  .pais.base{background:var(--rojo);border-color:var(--rojo);color:#fff;font-weight:600}
+  @media(max-width:900px){.presencia .wrap{grid-template-columns:1fr;gap:40px}}
+
+  /* ================= PROYECTOS (Webuild / Grupo Argos) ================= */
+  .proyectos{background:var(--hueso)}
+  .py-grid{display:grid;grid-template-columns:1.5fr 1fr;grid-template-rows:1fr 1fr;gap:26px;margin-top:60px}
+  .py-card{
+    position:relative;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;
+    justify-content:flex-end;padding:38px;color:#fff;min-height:280px;transition:transform .4s;
+  }
+  .py-card.grande{grid-row:1/3;min-height:600px}
+  .py-card:hover{transform:translateY(-8px)}
+  .py-card .fondo{position:absolute;inset:0;transition:transform .9s ease}
+  .py-card:hover .fondo{transform:scale(1.06)}
+  .py-card::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(10,12,16,.85),rgba(10,12,16,.05) 65%)}
+  .py-card > div{position:relative;z-index:2}
+  .py-card .tipo{font-size:10px;letter-spacing:.28em;text-transform:uppercase;font-weight:600;color:var(--gris-claro);margin-bottom:14px}
+  .py-card h3{font-size:24px;font-weight:500;line-height:1.3}
+  .py-card.grande h3{font-size:clamp(26px,2.6vw,36px)}
+  .py-card p{font-size:14px;color:rgba(255,255,255,.65);margin-top:10px;max-width:44ch}
+  .g1{background:linear-gradient(160deg,#3F6C8C 0%,#1E3B4E 55%,#101E28 100%)}
+  .g2{background:linear-gradient(150deg,#8F4353 0%,#552430 55%,#281116 100%)}
+  .g3{background:linear-gradient(150deg,#3A6A50 0%,#1B3F2E 55%,#0E2018 100%)}
+  @media(max-width:900px){.py-grid{grid-template-columns:1fr;grid-template-rows:auto}.py-card.grande{grid-row:auto;min-height:380px}}
+
+  /* ================= RESPONSABILIDAD (Grupo Argos) ================= */
+  .resp{background:var(--verde);color:#fff;position:relative;overflow:hidden}
+  .resp::before{
+    content:"";position:absolute;right:-140px;top:-140px;width:480px;height:480px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,255,255,.12),transparent 70%);
+  }
+  .resp .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:center;position:relative}
+  .resp .tag{color:rgba(255,255,255,.7)}
+  .resp .tag::before{background:#fff}
+  .resp h2{font-size:clamp(28px,3.6vw,48px);font-weight:300;line-height:1.2;margin:24px 0 26px}
+  .resp h2 b{font-weight:600}
+  .resp p{color:rgba(255,255,255,.85);max-width:52ch;margin-bottom:38px}
+  .resp-lineas a{
+    display:flex;justify-content:space-between;padding:22px 4px;
+    border-bottom:1px solid rgba(255,255,255,.25);font-size:16px;font-weight:500;transition:all .3s;
+  }
+  .resp-lineas a:hover{padding-left:16px}
+  .resp-lineas a span{opacity:.7}
+  @media(max-width:900px){.resp .wrap{grid-template-columns:1fr;gap:40px}}
+
+  /* ================= ACTUALIDAD + INVERSIONISTAS ================= */
+  .duo{background:#fff}
+  .duo .wrap{display:grid;grid-template-columns:1.4fr 1fr;gap:90px}
+  .duo h2{font-size:26px;font-weight:600;margin:22px 0 30px}
+  .noticia{display:grid;grid-template-columns:96px 1fr;gap:26px;padding:20px 0;border-bottom:1px solid var(--linea);align-items:baseline}
+  .noticia .fecha{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--gris-claro)}
+  .noticia a{font-size:16px;line-height:1.5;font-weight:500;transition:color .3s}
+  .noticia a:hover{color:var(--rojo)}
+  .inv-caja{background:var(--hueso);border-radius:20px;border-top:4px solid var(--azul);padding:44px;height:fit-content}
+  .inv-caja .tag::before{background:var(--azul)}
+  .inv-caja p{font-size:14px;color:var(--gris);margin:18px 0 26px}
+  .inv-caja .lista a{display:block;padding:14px 0;border-bottom:1px solid var(--linea);font-size:14.5px;font-weight:500;transition:all .3s}
+  .inv-caja .lista a:hover{padding-left:10px;color:var(--azul)}
+  @media(max-width:900px){.duo .wrap{grid-template-columns:1fr;gap:50px}}
+
+  /* ================= FOOTER ================= */
+  footer{background:var(--negro);color:rgba(255,255,255,.6);padding:100px 0 44px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:52px;margin-bottom:84px}
+  .foot-grid h4{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:#fff;font-weight:600;margin-bottom:22px}
+  .foot-grid a{display:block;font-size:13px;padding:5px 0;transition:color .3s;font-weight:500}
+  .foot-grid a:hover{color:#fff}
+  .foot-logo{display:flex;align-items:center;gap:12px;color:#fff;font-size:16px;margin-bottom:20px;font-weight:500;letter-spacing:.1em}
+  .foot-logo b{font-weight:700}
+  .foot-base{border-top:1px solid var(--linea-osc);padding-top:32px;display:flex;justify-content:space-between;font-size:12.5px;flex-wrap:wrap;gap:14px;font-weight:500}
+  @media(max-width:960px){.foot-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header id="cabecera">
+  <div class="wrap nav">
+    <a class="logo" href="#">
+      <svg viewBox="0 0 40 40" width="27" height="27" fill="none" stroke-width="1.8">
+        <defs><linearGradient id="ge" x1="0" y1="0" x2="1" y2="0"><stop offset="50%" stop-color="#BE1E3C"/><stop offset="50%" stop-color="#00783C"/></linearGradient></defs>
+        <path stroke="url(#ge)" d="M20 2 L24.5 15.5 L38 20 L24.5 24.5 L20 38 L15.5 24.5 L2 20 L15.5 15.5 Z"/>
+      </svg>
+      Grupo&nbsp;<b>ESTRELLA</b>
+    </a>
+    <nav class="menu">
+      <div><span>Propósito</span>
+        <div class="drop">
+          <a href="#">Historia</a><a href="#">Gobierno corporativo</a><a href="#">Cultura organizacional</a><a href="#">Ética empresarial</a><a href="#">Trabaja con nosotros</a>
+        </div>
+      </div>
+      <div><span>Portafolio</span>
+        <div class="drop ancho">
+          <div class="drop-titulo">Las empresas del grupo</div>
+          <a href="#">Ingeniería ESTRELLA <small>Infraestructura</small></a>
+          <a href="#">Acero ESTRELLA <small>Metálica</small></a>
+          <a href="#">PANAM <small>Cemento</small></a>
+          <a href="#">Bayano <small>Cemento · PA</small></a>
+          <a href="#">Ecoacero <small>Sostenible</small></a>
+          <a href="#">Laminados ESTRELLA <small>Laminados</small></a>
+          <a href="#">Panelkret <small>Fachadas</small></a>
+          <a href="#">Savanna <small>Inmobiliaria</small></a>
+          <a href="#">Inversiones <small>Capital</small></a>
+        </div>
+      </div>
+      <div><span>Proyectos</span>
+        <div class="drop"><a href="#">Obras de infraestructura</a><a href="#">Edificaciones</a><a href="#">En ejecución</a></div>
+      </div>
+      <div><span>Responsabilidad</span>
+        <div class="drop"><a href="#">Fundación ESTRELLA</a><a href="#">Desarrollo comunitario</a><a href="#">Sostenibilidad</a></div>
+      </div>
+      <div><span>Actualidad</span>
+        <div class="drop"><a href="#">Sala de prensa</a><a href="#">Publicaciones</a></div>
+      </div>
+      <div><span>Inversionistas</span>
+        <div class="drop"><a href="#">Ingeniería ESTRELLA</a><a href="#">Acero ESTRELLA</a><a href="#">Consorcio Minero Dominicano</a></div>
+      </div>
+    </nav>
+    <a class="nav-cta" href="#">Contacto</a>
+    <button class="burger" id="abrirMovil" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- menú móvil -->
+<div class="movil" id="menuMovil">
+  <button class="cerrar" id="cerrarMovil" aria-label="Cerrar menú">×</button>
+  <details><summary>Propósito</summary><a href="#">Historia</a><a href="#">Gobierno corporativo</a><a href="#">Cultura organizacional</a><a href="#">Ética empresarial</a><a href="#">Trabaja con nosotros</a></details>
+  <details><summary>Portafolio</summary><a href="#">Ingeniería ESTRELLA</a><a href="#">Acero ESTRELLA</a><a href="#">PANAM</a><a href="#">Bayano</a><a href="#">Ecoacero</a><a href="#">Laminados ESTRELLA</a><a href="#">Panelkret</a><a href="#">Savanna</a><a href="#">Inversiones</a></details>
+  <details><summary>Proyectos</summary><a href="#">Obras de infraestructura</a><a href="#">Edificaciones</a><a href="#">En ejecución</a></details>
+  <details><summary>Responsabilidad</summary><a href="#">Fundación ESTRELLA</a><a href="#">Desarrollo comunitario</a><a href="#">Sostenibilidad</a></details>
+  <details><summary>Actualidad</summary><a href="#">Sala de prensa</a><a href="#">Publicaciones</a></details>
+  <details><summary>Inversionistas</summary><a href="#">Ingeniería ESTRELLA</a><a href="#">Acero ESTRELLA</a><a href="#">Consorcio Minero Dominicano</a></details>
+</div>
+
+<!-- ================= HERO ================= -->
+<section class="hero" style="padding-top:0">
+  <div class="poster"></div>
+  <video autoplay muted loop playsinline poster="https://images.pexels.com/videos/7025003/city-construction-site-day-metropolis-7025003.jpeg?auto=compress&cs=tinysrgb&w=1600">
+    <source src="https://videos.pexels.com/video-files/7025003/7025003-hd_1920_1080_25fps.mp4" type="video/mp4">
+    <source src="https://videos.pexels.com/video-files/7025003/7025003-uhd_2732_1440_25fps.mp4" type="video/mp4">
+  </video>
+  <div class="wrap">
+    <div class="sello reveal in">★ 43 años de trayectoria</div>
+    <h1 class="reveal in">Construimos<br>
+      <span class="rotor" id="rotor">
+        <span class="activa">infraestructura</span>
+        <span>industria</span>
+        <span>comunidades</span>
+        <span>futuro</span>
+      </span>
+    </h1>
+    <p class="reveal in">Un grupo empresarial dominicano que impulsa el desarrollo de El Caribe y Centroamérica con un ecosistema integrado de construcción, acero, cemento y desarrollo inmobiliario.</p>
+    <div class="hero-links reveal in">
+      <a class="btn blanco" href="#portafolio">Conozca el grupo</a>
+      <a class="link-luz" href="#proyectos">Proyectos destacados</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CIFRAS ================= -->
+<div class="cifras">
+  <div class="wrap">
+    <div class="cifras-grid reveal">
+      <div class="cifra"><div class="num"><span class="contador" data-fin="43">0</span></div><div class="lbl">Años de trayectoria</div></div>
+      <div class="cifra"><div class="num"><span class="contador" data-fin="9">0</span></div><div class="lbl">Empresas del grupo</div></div>
+      <div class="cifra"><div class="num"><span class="contador" data-fin="8">0</span><i>+</i></div><div class="lbl">Países con presencia</div></div>
+      <div class="cifra"><div class="num"><span class="contador" data-fin="5">0</span></div><div class="lbl">Plantas de producción</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PROPÓSITO ================= -->
+<section class="proposito">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="tag">Propósito</div>
+      <p class="grande">Alineamos nuestro compromiso con el desarrollo de la República Dominicana y la región, impulsando cada proyecto con excelencia como pilar de una gestión sostenible. A través de la innovación, consolidamos un ecosistema integrado que fortalece nuestras capacidades.</p>
+      <div style="margin-top:36px"><a class="link" href="#">Nuestra historia</a></div>
+    </div>
+    <div class="valores reveal">
+      <div class="valor">
+        <div class="icono"><svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z"/></svg></div>
+        <div><h4>Compromiso</h4><p>Con el desarrollo de la región y con cada aliado estratégico.</p></div>
+      </div>
+      <div class="valor">
+        <div class="icono"><svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z"/></svg></div>
+        <div><h4>Calidad</h4><p>Ejecución calificada por reconocidas certificaciones internacionales.</p></div>
+      </div>
+      <div class="valor">
+        <div class="icono"><svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z"/></svg></div>
+        <div><h4>Responsabilidad</h4><p>Una conducta íntegra, apegada a los valores corporativos que nos distinguen.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PORTAFOLIO ================= -->
+<section class="portafolio" id="portafolio">
+  <div class="wrap">
+    <div class="cabeza reveal">
+      <div>
+        <div class="tag">Portafolio</div>
+        <h2 class="titulo">Un ecosistema, <b>nueve empresas</b></h2>
+      </div>
+      <a class="link" href="#">Ver portafolio completo</a>
+    </div>
+
+    <div class="logo-muro reveal">
+      <a class="celda" href="#">
+        <svg class="estrellita" viewBox="0 0 20 20" fill="#BE1E3C"><path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z"/></svg>
+        <span class="wm"><span class="sobre">Ingeniería</span><span class="nombre">Estrella</span></span>
+        <span class="hover-info">
+          <span class="rol">Grandes obras de infraestructura y edificaciones en cuatro países</span>
+          <span class="mini-btn">Más información</span>
+        </span>
+      </a>
+      <a class="celda" href="#">
+        <svg class="estrellita" viewBox="0 0 20 20" fill="#BE1E3C"><path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z"/></svg>
+        <span class="wm"><span class="nombre">Panam</span></span>
+        <span class="hover-info">
+          <span class="rol">Cemento, concreto y agregados de máxima resistencia</span>
+          <span class="mini-btn">Más información</span>
+        </span>
+      </a>
+      <a class="celda" href="#">
+        <svg class="estrellita" viewBox="0 0 20 20" fill="#BE1E3C"><path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z"/></svg>
+        <span class="wm"><span class="sobre">Acero</span><span class="nombre">Estrella</span></span>
+        <span class="hover-info">
+          <span class="rol">Líder del mercado en construcciones metálicas</span>
+          <span class="mini-btn">Más información</span>
+        </span>
+      </a>
+      <a class="celda" href="#">
+        <svg class="estrellita" viewBox="0 0 20 20" fill="#BE1E3C"><path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z"/></svg>
+        <span class="wm"><span class="sobre">Laminados</span><span class="nombre">Estrella</span></span>
+        <span class="hover-info">
+          <span class="rol">Láminas en acero para techos, entrepisos y cerramientos</span>
+          <span class="mini-btn">Más información</span>
+        </span>
+      </a>
+      <a class="celda" href="#">
+        <svg class="estrellita" viewBox="0 0 20 20" fill="#BE1E3C"><path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z"/></svg>
+        <span class="wm"><span class="nombre">Ecoacero</span></span>
+        <span class="hover-info">
+          <span class="rol">Nueva generación en la fabricación de varillas de acero</span>
+          <span class="mini-btn">Más información</span>
+        </span>
+      </a>
+      <a class="celda" href="#">
+        <svg class="estrellita" viewBox="0 0 20 20" fill="#BE1E3C"><path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z"/></svg>
+        <span class="wm"><span class="nombre">Bayano</span></span>
+        <span class="hover-info">
+          <span class="rol">Cemento, concreto y agregados desde Panamá</span>
+          <span class="mini-btn">Más información</span>
+        </span>
+      </a>
+      <a class="celda" href="#">
+        <svg class="estrellita" viewBox="0 0 20 20" fill="#BE1E3C"><path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z"/></svg>
+        <span class="wm"><span class="nombre">Panelkret</span></span>
+        <span class="hover-info">
+          <span class="rol">Sistemas de fachadas de alto desempeño</span>
+          <span class="mini-btn">Más información</span>
+        </span>
+      </a>
+      <a class="celda" href="#">
+        <svg class="estrellita" viewBox="0 0 20 20" fill="#BE1E3C"><path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z"/></svg>
+        <span class="wm"><span class="nombre">Savanna</span></span>
+        <span class="hover-info">
+          <span class="rol">Desarrollo inmobiliario</span>
+          <span class="mini-btn">Más información</span>
+        </span>
+      </a>
+      <a class="celda" href="#">
+        <svg class="estrellita" viewBox="0 0 20 20" fill="#BE1E3C"><path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z"/></svg>
+        <span class="wm"><span class="nombre">Inversiones</span></span>
+        <span class="hover-info">
+          <span class="rol">Energía, salud e infraestructura aeroportuaria</span>
+          <span class="mini-btn">Más información</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRESENCIA ================= -->
+<section class="presencia">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="tag">Presencia regional</div>
+      <h2>Desde Santiago hacia <b>El Caribe y Centroamérica</b></h2>
+      <p style="color:rgba(255,255,255,.6);margin-top:18px;font-size:15px">Oficinas corporativas en Santiago y Santo Domingo. Plantas de producción en San Pedro de Macorís, San Cristóbal, Bávaro, Villa Vásquez y Villa González.</p>
+    </div>
+    <div class="paises reveal">
+      <span class="pais base">República Dominicana</span>
+      <span class="pais">Haití</span>
+      <span class="pais">Panamá</span>
+      <span class="pais">Costa Rica</span>
+      <span class="pais">Paraguay</span>
+      <span class="pais">Antigua y Barbuda</span>
+      <span class="pais">Jamaica</span>
+      <span class="pais">Tórtola</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROYECTOS ================= -->
+<section class="proyectos" id="proyectos">
+  <div class="wrap">
+    <div class="cabeza reveal" style="margin-bottom:0">
+      <div>
+        <div class="tag">Proyectos</div>
+        <h2 class="titulo">Obras que <b>transforman territorios</b></h2>
+      </div>
+      <a class="link" href="#">Todos los proyectos</a>
+    </div>
+    <div class="py-grid reveal">
+      <a class="py-card grande" href="#">
+        <span class="fondo g1"></span>
+        <div>
+          <div class="tipo">En ejecución · Zona franca</div>
+          <h3>Parque de zona franca para el desarrollo del país</h3>
+          <p>Manufactura avanzada, alta tecnología y centro logístico, edificado con prácticas responsables y criterios de conservación ambiental.</p>
+        </div>
+      </a>
+      <a class="py-card" href="#">
+        <span class="fondo g2"></span>
+        <div>
+          <div class="tipo">Infraestructura regional</div>
+          <h3>Corredor Vial Circunvalación Norte (Costa Rica) y carreteras Nationale 1 y Les Cayes–Jérémie (Haití)</h3>
+        </div>
+      </a>
+      <a class="py-card" href="#">
+        <span class="fondo g3"></span>
+        <div>
+          <div class="tipo">Edificaciones</div>
+          <h3>Torre Corporativa Asociación Cibao y proyectos industriales, comerciales y de salud</h3>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESPONSABILIDAD ================= -->
+<section class="resp">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="tag">Responsabilidad</div>
+      <h2>El desarrollo también <b>se siembra</b></h2>
+      <p>A través de la Fundación ESTRELLA concentramos el apoyo a la educación y al emprendimiento de la juventud dominicana: formación en programación, inglés desde el nivel inicial y alianzas con academias de estudios profesionales.</p>
+      <a class="btn blanco" href="#">Fundación ESTRELLA</a>
+    </div>
+    <div class="resp-lineas reveal">
+      <a href="#">Fundación ESTRELLA <span>→</span></a>
+      <a href="#">Desarrollo comunitario <span>→</span></a>
+      <a href="#">Sostenibilidad <span>→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ACTUALIDAD + INVERSIONISTAS ================= -->
+<section class="duo">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="tag">Actualidad</div>
+      <h2>Sala de prensa</h2>
+      <div class="noticia"><span class="fecha">May 2026</span><a href="#">ECOACERO inaugura su planta de fabricación de varillas en Villa Gautier, San Pedro de Macorís</a></div>
+      <div class="noticia"><span class="fecha">Mar 2026</span><a href="#">Cemento Bayano presenta su nueva imagen y consolida su portafolio en Panamá</a></div>
+      <div class="noticia"><span class="fecha">Oct 2025</span><a href="#">El grupo adquiere los activos de Cemex Panamá y expande su unidad cementera en Centroamérica</a></div>
+      <a class="link" href="#" style="display:inline-block;margin-top:32px">Todas las publicaciones</a>
+    </div>
+    <div class="inv-caja reveal">
+      <div class="tag">Inversionistas</div>
+      <p>Información financiera y de gobierno corporativo de las empresas emisoras del grupo.</p>
+      <div class="lista">
+        <a href="#">Ingeniería ESTRELLA</a>
+        <a href="#">Acero ESTRELLA</a>
+        <a href="#">Consorcio Minero Dominicano</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-logo">
+          <svg viewBox="0 0 40 40" width="24" height="24" fill="none" stroke-width="1.8">
+            <defs><linearGradient id="gef" x1="0" y1="0" x2="1" y2="0"><stop offset="50%" stop-color="#BE1E3C"/><stop offset="50%" stop-color="#00783C"/></linearGradient></defs>
+            <path stroke="url(#gef)" d="M20 2 L24.5 15.5 L38 20 L24.5 24.5 L20 38 L15.5 24.5 L2 20 L15.5 15.5 Z"/>
+          </svg>
+          Grupo&nbsp;<b>ESTRELLA</b>
+        </div>
+        <p style="font-size:13px;max-width:30ch">Construcción para el desarrollo de El Caribe y Centroamérica.</p>
+      </div>
+      <div>
+        <h4>Propósito</h4>
+        <a href="#">Historia</a><a href="#">Gobierno corporativo</a><a href="#">Cultura organizacional</a><a href="#">Ética empresarial</a><a href="#">Trabaja con nosotros</a>
+      </div>
+      <div>
+        <h4>Portafolio</h4>
+        <a href="#">Ingeniería ESTRELLA</a><a href="#">Acero ESTRELLA</a><a href="#">PANAM</a><a href="#">Bayano</a><a href="#">Ecoacero</a><a href="#">Laminados ESTRELLA</a><a href="#">Panelkret</a><a href="#">Savanna</a><a href="#">Inversiones</a>
+      </div>
+      <div>
+        <h4>Proyectos</h4>
+        <a href="#">Obras de infraestructura</a><a href="#">Edificaciones</a><a href="#">En ejecución</a>
+        <h4 style="margin-top:26px">Responsabilidad</h4>
+        <a href="#">Fundación ESTRELLA</a><a href="#">Desarrollo comunitario</a><a href="#">Sostenibilidad</a>
+      </div>
+      <div>
+        <h4>Actualidad</h4>
+        <a href="#">Sala de prensa</a><a href="#">Publicaciones</a>
+        <h4 style="margin-top:26px">Inversionistas</h4>
+        <a href="#">Ingeniería ESTRELLA</a><a href="#">Acero ESTRELLA</a><a href="#">Consorcio Minero Dominicano</a>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>© 2026 Grupo ESTRELLA · Santiago de los Caballeros, República Dominicana</span>
+      <span>Compromiso · Calidad · Responsabilidad</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---------- Header sólido ----------
+  const cab = document.getElementById('cabecera');
+  const onScroll = () => cab.classList.toggle('solid', window.scrollY > 40);
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  // ---------- Menú móvil ----------
+  const movil = document.getElementById('menuMovil');
+  document.getElementById('abrirMovil').addEventListener('click', ()=>movil.classList.add('abierto'));
+  document.getElementById('cerrarMovil').addEventListener('click', ()=>movil.classList.remove('abierto'));
+
+  // ---------- Palabra rotativa del hero (estilo Acciona) ----------
+  const rotor = document.querySelectorAll('#rotor span');
+  let ri = 0;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduceMotion && rotor.length){
+    setInterval(()=>{
+      rotor[ri].classList.remove('activa');
+      ri = (ri+1) % rotor.length;
+      rotor[ri].classList.add('activa');
+    }, 2800);
+  }
+
+  // ---------- Contadores (estilo VINCI) ----------
+  const animarContador = el => {
+    const fin = +el.dataset.fin, dur = 1400, t0 = performance.now();
+    const paso = t => {
+      const p = Math.min((t - t0)/dur, 1);
+      el.textContent = Math.round(fin * (1 - Math.pow(1-p, 3)));
+      if(p < 1) requestAnimationFrame(paso);
+    };
+    if(reduceMotion){ el.textContent = fin; } else requestAnimationFrame(paso);
+  };
+  const ioNum = new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ animarContador(e.target); ioNum.unobserve(e.target);} });
+  },{threshold:.5});
+  document.querySelectorAll('.contador').forEach(el=>ioNum.observe(el));
+
+  // ---------- Revelado al hacer scroll ----------
+  const io = new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
