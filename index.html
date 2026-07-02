@@ -112,8 +112,8 @@
 
   /* ================= HERO (Acciona) ================= */
   .hero{
-    position:relative;min-height:100svh;display:flex;align-items:flex-end;
-    color:#fff;overflow:hidden;padding:0 0 100px;background:var(--negro);
+    position:relative;min-height:100svh;display:flex;align-items:center;
+    color:#fff;overflow:hidden;padding:110px 0 70px;background:var(--negro);
   }
   .hero video,.hero .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .hero .poster{background:url('https://images.pexels.com/videos/7025003/city-construction-site-day-metropolis-7025003.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover}
@@ -126,7 +126,7 @@
   }
   .hero h1{
     font-size:clamp(42px,6.6vw,96px);font-weight:300;line-height:1.06;
-    letter-spacing:-.02em;margin:34px 0 30px;max-width:16ch;
+    letter-spacing:-.02em;margin:28px 0 26px;max-width:16ch;
   }
   /* --- fondos del slider --- */
   .hero-fondos{position:absolute;inset:0;z-index:0}
@@ -142,7 +142,7 @@
   #heroSub{transition:opacity .45s ease,transform .45s ease}
   .cambiando{opacity:0;transform:translateY(12px)}
   /* --- barras de progreso --- */
-  .progresos{display:flex;gap:12px;margin-top:54px;position:relative;z-index:2}
+  .progresos{display:flex;gap:12px;margin-top:44px;position:relative;z-index:2}
   .prog{
     width:76px;height:3px;background:rgba(255,255,255,.28);border-radius:3px;
     overflow:hidden;cursor:pointer;transition:background .3s;
@@ -191,28 +191,28 @@
   .logo-muro{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--linea);border-left:1px solid var(--linea)}
   .celda{
     position:relative;border-right:1px solid var(--linea);border-bottom:1px solid var(--linea);
-    min-height:240px;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:0;padding:38px 30px;transition:background .4s;text-align:center;overflow:hidden;
+    min-height:168px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:0;padding:26px 28px;transition:background .4s;text-align:center;overflow:hidden;
   }
   .celda:hover{background:var(--hueso)}
   .wm{
     font-family:'Oswald',sans-serif;text-transform:uppercase;color:#9B9B9B;
     line-height:1;transition:color .4s,transform .45s cubic-bezier(.3,.7,.3,1);
   }
-  .celda:hover .wm{color:var(--tinta);transform:translateY(-14px)}
+  .celda:hover .wm{color:var(--tinta);transform:translateY(-8px)}
   .wm .sobre{display:block;font-size:10px;letter-spacing:.34em;font-weight:600;color:#BDBDBD;margin-bottom:6px;transition:color .4s}
   .celda:hover .wm .sobre{color:var(--rojo)}
-  .wm .nombre{font-size:29px;font-weight:600;letter-spacing:.13em}
+  .wm .nombre{font-size:26px;font-weight:600;letter-spacing:.13em}
   .celda .hover-info{
     display:flex;flex-direction:column;align-items:center;gap:16px;
     max-height:0;opacity:0;transform:translateY(10px);
     transition:max-height .45s ease,opacity .45s ease,transform .45s ease;
   }
-  .celda:hover .hover-info{max-height:160px;opacity:1;transform:none;margin-top:4px}
-  .celda .rol{font-size:13px;color:var(--gris);line-height:1.5;max-width:34ch;font-weight:500}
+  .celda:hover .hover-info{max-height:130px;opacity:1;transform:none;margin-top:2px}
+  .celda .rol{font-size:12.5px;color:var(--gris);line-height:1.45;max-width:36ch;font-weight:500}
   .celda .mini-btn{
-    font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;
-    color:#fff;background:var(--rojo);padding:10px 22px;border-radius:999px;transition:background .3s;
+    font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;
+    color:#fff;background:var(--rojo);padding:8px 18px;border-radius:999px;transition:background .3s;
   }
   .celda:hover .mini-btn:hover{background:var(--negro)}
   .celda .estrellita{position:absolute;top:16px;right:18px;width:12px;height:12px;opacity:0;transition:opacity .4s}
@@ -230,10 +230,10 @@
   .presencia{background:var(--hueso);color:var(--tinta);padding:100px 0;position:relative;overflow:hidden}
   .presencia-fondo{
     position:absolute;inset:0;background-size:cover;background-position:center;
-    opacity:0;transition:opacity .7s ease, background-image .1s;pointer-events:none;
+    opacity:.16;transition:opacity .7s ease;pointer-events:none;
     filter:saturate(.85);
   }
-  .presencia-fondo.visible{opacity:.16}
+  .presencia-fondo.cambiando{opacity:0}
   .presencia .wrap{display:grid;grid-template-columns:1fr 1.4fr;gap:70px;align-items:center;position:relative;z-index:2}
   .presencia h2{font-size:clamp(26px,3vw,40px);font-weight:300;line-height:1.2;margin-top:22px}
   .presencia h2 b{font-weight:600}
@@ -270,10 +270,18 @@
   @media(max-width:900px){.py-grid{grid-template-columns:1fr;grid-template-rows:auto}.py-card.grande{grid-row:auto;min-height:380px}}
 
   /* ================= RESPONSABILIDAD (Grupo Argos) ================= */
-  .resp{background:var(--verde);color:#fff;position:relative;overflow:hidden}
+  .resp{
+    background:linear-gradient(135deg,#00813F 0%,#006B34 55%,#005229 100%);
+    color:#fff;position:relative;overflow:hidden;
+  }
   .resp::before{
-    content:"";position:absolute;right:-140px;top:-140px;width:480px;height:480px;border-radius:50%;
-    background:radial-gradient(circle,rgba(255,255,255,.12),transparent 70%);
+    content:"";position:absolute;inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cpath d='M48 18 L52.5 43.5 L78 48 L52.5 52.5 L48 78 L43.5 52.5 L18 48 L43.5 43.5 Z' fill='none' stroke='rgba(255,255,255,0.07)' stroke-width='1'/%3E%3C/svg%3E");
+    background-size:96px 96px;pointer-events:none;
+  }
+  .resp .estrella-deco{
+    position:absolute;right:-120px;top:50%;transform:translateY(-50%) rotate(12deg);
+    width:520px;height:520px;opacity:.4;pointer-events:none;
   }
   .resp .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:center;position:relative}
   .resp .tag{color:rgba(255,255,255,.7)}
@@ -293,15 +301,34 @@
   .duo{background:#fff}
   .duo .wrap{display:grid;grid-template-columns:1.4fr 1fr;gap:90px}
   .duo h2{font-size:26px;font-weight:600;margin:22px 0 30px}
-  .noticia{display:grid;grid-template-columns:96px 1fr;gap:26px;padding:20px 0;border-bottom:1px solid var(--linea);align-items:baseline}
-  .noticia .fecha{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--gris-claro)}
-  .noticia a{font-size:16px;line-height:1.5;font-weight:500;transition:color .3s}
+  .noticia{display:grid;grid-template-columns:112px 1fr;gap:24px;padding:18px 0;border-bottom:1px solid var(--linea);align-items:center}
+  .noticia .mini{
+    width:112px;height:76px;object-fit:cover;border-radius:12px;display:block;
+    transition:transform .35s ease;
+  }
+  .noticia:hover .mini{transform:scale(1.05)}
+  .noticia .fecha{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--gris-claro);margin-bottom:6px}
+  .noticia a{font-size:16px;line-height:1.45;font-weight:500;transition:color .3s}
   .noticia a:hover{color:var(--rojo)}
+  @media(max-width:560px){.noticia{grid-template-columns:88px 1fr;gap:16px}.noticia .mini{width:88px;height:62px}}
   .inv-caja{background:var(--hueso);border-radius:20px;border-top:4px solid var(--azul);padding:44px;height:fit-content}
   .inv-caja .tag::before{background:var(--azul)}
   .inv-caja p{font-size:14px;color:var(--gris);margin:18px 0 26px}
-  .inv-caja .lista a{display:block;padding:14px 0;border-bottom:1px solid var(--linea);font-size:14.5px;font-weight:500;transition:all .3s}
-  .inv-caja .lista a:hover{padding-left:10px;color:var(--azul)}
+  .inv-caja .lista a{
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+    padding:16px 0;border-bottom:1px solid var(--linea);transition:all .3s;
+  }
+  .inv-caja .lista a:hover{padding-left:10px}
+  .inv-caja .wm-inv{
+    font-family:'Oswald',sans-serif;text-transform:uppercase;color:#9B9B9B;line-height:1;
+    transition:color .3s;
+  }
+  .inv-caja .lista a:hover .wm-inv{color:var(--tinta)}
+  .inv-caja .wm-inv .sobre{display:block;font-size:8.5px;letter-spacing:.3em;font-weight:600;color:#BDBDBD;margin-bottom:4px;transition:color .3s}
+  .inv-caja .lista a:hover .wm-inv .sobre{color:var(--azul)}
+  .inv-caja .wm-inv .nombre{font-size:19px;font-weight:600;letter-spacing:.12em}
+  .inv-caja .lista a .fl{color:var(--gris-claro);transition:all .3s;font-size:15px}
+  .inv-caja .lista a:hover .fl{color:var(--azul);transform:translateX(4px)}
   @media(max-width:900px){.duo .wrap{grid-template-columns:1fr;gap:50px}}
 
   /* ================= FOOTER ================= */
@@ -543,7 +570,7 @@
 
 <!-- ================= PRESENCIA ================= -->
 <section class="presencia">
-  <div class="presencia-fondo" id="presenciaFondo"></div>
+  <div class="presencia-fondo" id="presenciaFondo" style="background-image:url('https://images.pexels.com/photos/21920140/pexels-photo-21920140.jpeg?auto=compress&cs=tinysrgb&w=1400')"></div>
   <div class="wrap">
     <div class="reveal">
       <div class="tag">Presencia regional</div>
@@ -602,6 +629,11 @@
 
 <!-- ================= RESPONSABILIDAD ================= -->
 <section class="resp">
+  <svg class="estrella-deco" viewBox="0 0 200 200" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="0.5">
+    <path d="M100 8 L113 87 L192 100 L113 113 L100 192 L87 113 L8 100 L87 87 Z"/>
+    <path d="M100 34 L109 91 L166 100 L109 109 L100 166 L91 109 L34 100 L91 91 Z"/>
+    <circle cx="100" cy="100" r="70"/>
+  </svg>
   <div class="wrap">
     <div class="reveal">
       <div class="tag">Responsabilidad</div>
@@ -623,18 +655,27 @@
     <div class="reveal">
       <div class="tag">Actualidad</div>
       <h2>Sala de prensa</h2>
-      <div class="noticia"><span class="fecha">May 2026</span><a href="#">ECOACERO inaugura su planta de fabricación de varillas en Villa Gautier, San Pedro de Macorís</a></div>
-      <div class="noticia"><span class="fecha">Mar 2026</span><a href="#">Cemento Bayano presenta su nueva imagen y consolida su portafolio en Panamá</a></div>
-      <div class="noticia"><span class="fecha">Oct 2025</span><a href="#">El grupo adquiere los activos de Cemex Panamá y expande su unidad cementera en Centroamérica</a></div>
+      <div class="noticia">
+        <img class="mini" src="https://images.pexels.com/photos/8803230/pexels-photo-8803230.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Planta de acero" loading="lazy">
+        <div><span class="fecha">May 2026</span><a href="#">ECOACERO inaugura su planta de fabricación de varillas en Villa Gautier, San Pedro de Macorís</a></div>
+      </div>
+      <div class="noticia">
+        <img class="mini" src="https://images.pexels.com/photos/32845683/pexels-photo-32845683.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Planta industrial Bayano" loading="lazy">
+        <div><span class="fecha">Mar 2026</span><a href="#">Cemento Bayano presenta su nueva imagen y consolida su portafolio en Panamá</a></div>
+      </div>
+      <div class="noticia">
+        <img class="mini" src="https://images.pexels.com/photos/18185251/pexels-photo-18185251.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Ciudad de Panamá" loading="lazy">
+        <div><span class="fecha">Oct 2025</span><a href="#">El grupo adquiere los activos de Cemex Panamá y expande su unidad cementera en Centroamérica</a></div>
+      </div>
       <a class="link" href="#" style="display:inline-block;margin-top:32px">Todas las publicaciones</a>
     </div>
     <div class="inv-caja reveal">
       <div class="tag">Inversionistas</div>
       <p>Información financiera y de gobierno corporativo de las empresas emisoras del grupo.</p>
       <div class="lista">
-        <a href="#">Ingeniería ESTRELLA</a>
-        <a href="#">Acero ESTRELLA</a>
-        <a href="#">Consorcio Minero Dominicano</a>
+        <a href="#"><span class="wm-inv"><span class="sobre">Ingeniería</span><span class="nombre">Estrella</span></span><span class="fl">→</span></a>
+        <a href="#"><span class="wm-inv"><span class="sobre">Acero</span><span class="nombre">Estrella</span></span><span class="fl">→</span></a>
+        <a href="#"><span class="wm-inv"><span class="sobre">Consorcio Minero</span><span class="nombre">Dominicano</span></span><span class="fl">→</span></a>
       </div>
     </div>
   </div>
@@ -776,29 +817,34 @@
   },{threshold:.5});
   document.querySelectorAll('.contador').forEach(el=>ioNum.observe(el));
 
-  // ---------- Presencia: imagen tenue por país ----------
+  // ---------- Presencia: país seleccionado con imagen de fondo persistente ----------
   const fondoPais = document.getElementById('presenciaFondo');
-  let fueraTimer = null;
-  document.querySelectorAll('.pais').forEach(p => {
-    const url = p.dataset.img;
+  const pills = [...document.querySelectorAll('.pais')];
+  let paisSel = pills.find(p => p.classList.contains('base')) || pills[0];
+
+  const mostrarPais = url => {
     if(!url) return;
-    // precarga suave
-    const pre = new Image(); pre.src = url;
-    p.addEventListener('mouseenter', () => {
-      clearTimeout(fueraTimer);
+    fondoPais.classList.add('cambiando');
+    setTimeout(()=>{
       fondoPais.style.backgroundImage = `url('${url}')`;
-      fondoPais.classList.add('visible');
-    });
-    p.addEventListener('mouseleave', () => {
-      fueraTimer = setTimeout(()=>fondoPais.classList.remove('visible'), 250);
-    });
-    // táctil: tap muestra la imagen
+      fondoPais.classList.remove('cambiando');
+    }, 350);
+  };
+
+  pills.forEach(p => {
+    const url = p.dataset.img;
+    if(url){ const pre = new Image(); pre.src = url; } // precarga
+    // clic: queda seleccionado (rojo) y su imagen fija de fondo
     p.addEventListener('click', () => {
-      fondoPais.style.backgroundImage = `url('${url}')`;
-      fondoPais.classList.add('visible');
-      clearTimeout(fueraTimer);
-      fueraTimer = setTimeout(()=>fondoPais.classList.remove('visible'), 2500);
+      if(p === paisSel) return;
+      paisSel.classList.remove('base');
+      p.classList.add('base');
+      paisSel = p;
+      mostrarPais(url);
     });
+    // hover: vista previa; al salir vuelve la imagen del seleccionado
+    p.addEventListener('mouseenter', () => { if(p !== paisSel) mostrarPais(url); });
+    p.addEventListener('mouseleave', () => { if(p !== paisSel) mostrarPais(paisSel.dataset.img); });
   });
 
   // ---------- Revelado al hacer scroll ----------
