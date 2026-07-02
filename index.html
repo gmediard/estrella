@@ -141,13 +141,13 @@
   .link-luz:hover{border-color:var(--rojo)}
 
   /* ================= CIFRAS (VINCI) ================= */
-  .cifras{background:var(--negro);color:#fff;padding:0 0 100px}
-  .cifras-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--linea-osc)}
-  .cifra{padding:48px 30px 0;border-left:1px solid var(--linea-osc)}
+  .cifras{background:#fff;color:var(--tinta);padding:70px 0;border-bottom:1px solid var(--linea)}
+  .cifras-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--linea)}
+  .cifra{padding:48px 30px 0;border-left:1px solid var(--linea)}
   .cifra:first-child{border-left:none;padding-left:0}
   .cifra .num{font-size:58px;font-weight:300;line-height:1;letter-spacing:-.02em}
   .cifra .num i{font-style:normal;color:var(--rojo);font-weight:400}
-  .cifra .lbl{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:16px;font-weight:600}
+  .cifra .lbl{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gris);margin-top:16px;font-weight:600}
   @media(max-width:860px){.cifras-grid{grid-template-columns:1fr 1fr}.cifra{padding:36px 20px 0}}
 
   /* ================= PROPÓSITO (Votorantim) ================= */
@@ -207,17 +207,22 @@
   }
 
   /* ================= PRESENCIA (Webuild) ================= */
-  .presencia{background:var(--carbon);color:#fff;padding:90px 0}
-  .presencia .wrap{display:grid;grid-template-columns:1fr 1.4fr;gap:70px;align-items:center}
+  .presencia{background:var(--hueso);color:var(--tinta);padding:100px 0;position:relative;overflow:hidden}
+  .presencia-fondo{
+    position:absolute;inset:0;background-size:cover;background-position:center;
+    opacity:0;transition:opacity .7s ease, background-image .1s;pointer-events:none;
+    filter:saturate(.85);
+  }
+  .presencia-fondo.visible{opacity:.16}
+  .presencia .wrap{display:grid;grid-template-columns:1fr 1.4fr;gap:70px;align-items:center;position:relative;z-index:2}
   .presencia h2{font-size:clamp(26px,3vw,40px);font-weight:300;line-height:1.2;margin-top:22px}
   .presencia h2 b{font-weight:600}
-  .presencia .tag{color:rgba(255,255,255,.55)}
   .paises{display:flex;flex-wrap:wrap;gap:12px}
   .pais{
-    font-size:13.5px;font-weight:500;padding:12px 22px;border:1px solid var(--linea-osc);
-    border-radius:999px;color:rgba(255,255,255,.8);transition:all .3s;
+    font-size:13.5px;font-weight:500;padding:12px 22px;border:1.5px solid var(--linea);
+    border-radius:999px;color:var(--gris);transition:all .3s;cursor:pointer;background:rgba(255,255,255,.6);
   }
-  .pais:hover{border-color:var(--rojo);color:#fff;transform:translateY(-2px)}
+  .pais:hover{border-color:var(--rojo);color:var(--tinta);transform:translateY(-2px);background:#fff}
   .pais.base{background:var(--rojo);border-color:var(--rojo);color:#fff;font-weight:600}
   @media(max-width:900px){.presencia .wrap{grid-template-columns:1fr;gap:40px}}
 
@@ -231,6 +236,7 @@
   .py-card.grande{grid-row:1/3;min-height:600px}
   .py-card:hover{transform:translateY(-8px)}
   .py-card .fondo{position:absolute;inset:0;transition:transform .9s ease}
+  .py-card .fondo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .py-card:hover .fondo{transform:scale(1.06)}
   .py-card::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(10,12,16,.85),rgba(10,12,16,.05) 65%)}
   .py-card > div{position:relative;z-index:2}
@@ -503,21 +509,22 @@
 
 <!-- ================= PRESENCIA ================= -->
 <section class="presencia">
+  <div class="presencia-fondo" id="presenciaFondo"></div>
   <div class="wrap">
     <div class="reveal">
       <div class="tag">Presencia regional</div>
       <h2>Desde Santiago hacia <b>El Caribe y Centroamérica</b></h2>
-      <p style="color:rgba(255,255,255,.6);margin-top:18px;font-size:15px">Oficinas corporativas en Santiago y Santo Domingo. Plantas de producción en San Pedro de Macorís, San Cristóbal, Bávaro, Villa Vásquez y Villa González.</p>
+      <p style="color:var(--gris);margin-top:18px;font-size:15px">Oficinas corporativas en Santiago y Santo Domingo. Plantas de producción en San Pedro de Macorís, San Cristóbal, Bávaro, Villa Vásquez y Villa González.</p>
     </div>
     <div class="paises reveal">
-      <span class="pais base">República Dominicana</span>
-      <span class="pais">Haití</span>
-      <span class="pais">Panamá</span>
-      <span class="pais">Costa Rica</span>
-      <span class="pais">Paraguay</span>
-      <span class="pais">Antigua y Barbuda</span>
-      <span class="pais">Jamaica</span>
-      <span class="pais">Tórtola</span>
+      <span class="pais base" data-img="https://images.pexels.com/photos/21920140/pexels-photo-21920140.jpeg?auto=compress&cs=tinysrgb&w=1400">República Dominicana</span>
+      <span class="pais" data-img="https://images.pexels.com/photos/26628629/pexels-photo-26628629.jpeg?auto=compress&cs=tinysrgb&w=1400">Haití</span>
+      <span class="pais" data-img="https://images.pexels.com/photos/18185251/pexels-photo-18185251.jpeg?auto=compress&cs=tinysrgb&w=1400">Panamá</span>
+      <span class="pais" data-img="https://images.pexels.com/photos/13068955/pexels-photo-13068955.jpeg?auto=compress&cs=tinysrgb&w=1400">Costa Rica</span>
+      <span class="pais" data-img="https://images.pexels.com/photos/3571576/pexels-photo-3571576.jpeg?auto=compress&cs=tinysrgb&w=1400">Paraguay</span>
+      <span class="pais" data-img="https://images.pexels.com/photos/29773805/pexels-photo-29773805.jpeg?auto=compress&cs=tinysrgb&w=1400">Antigua y Barbuda</span>
+      <span class="pais" data-img="https://images.pexels.com/photos/12858513/pexels-photo-12858513.jpeg?auto=compress&cs=tinysrgb&w=1400">Jamaica</span>
+      <span class="pais" data-img="https://images.pexels.com/photos/1482193/pexels-photo-1482193.jpeg?auto=compress&cs=tinysrgb&w=1400">Tórtola</span>
     </div>
   </div>
 </section>
@@ -534,7 +541,7 @@
     </div>
     <div class="py-grid reveal">
       <a class="py-card grande" href="#">
-        <span class="fondo g1"></span>
+        <span class="fondo g1"><img src="https://images.pexels.com/videos/7025003/city-construction-site-day-metropolis-7025003.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Parque de zona franca en construcción" loading="lazy"></span>
         <div>
           <div class="tipo">En ejecución · Zona franca</div>
           <h3>Parque de zona franca para el desarrollo del país</h3>
@@ -542,14 +549,14 @@
         </div>
       </a>
       <a class="py-card" href="#">
-        <span class="fondo g2"></span>
+        <span class="fondo g2"><img src="https://images.pexels.com/photos/10743395/pexels-photo-10743395.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Carretera de infraestructura regional" loading="lazy"></span>
         <div>
           <div class="tipo">Infraestructura regional</div>
           <h3>Corredor Vial Circunvalación Norte (Costa Rica) y carreteras Nationale 1 y Les Cayes–Jérémie (Haití)</h3>
         </div>
       </a>
       <a class="py-card" href="#">
-        <span class="fondo g3"></span>
+        <span class="fondo g3"><img src="https://images.pexels.com/photos/18027952/pexels-photo-18027952.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Torre corporativa" loading="lazy"></span>
         <div>
           <div class="tipo">Edificaciones</div>
           <h3>Torre Corporativa Asociación Cibao y proyectos industriales, comerciales y de salud</h3>
@@ -678,6 +685,31 @@
     es.forEach(e=>{ if(e.isIntersecting){ animarContador(e.target); ioNum.unobserve(e.target);} });
   },{threshold:.5});
   document.querySelectorAll('.contador').forEach(el=>ioNum.observe(el));
+
+  // ---------- Presencia: imagen tenue por país ----------
+  const fondoPais = document.getElementById('presenciaFondo');
+  let fueraTimer = null;
+  document.querySelectorAll('.pais').forEach(p => {
+    const url = p.dataset.img;
+    if(!url) return;
+    // precarga suave
+    const pre = new Image(); pre.src = url;
+    p.addEventListener('mouseenter', () => {
+      clearTimeout(fueraTimer);
+      fondoPais.style.backgroundImage = `url('${url}')`;
+      fondoPais.classList.add('visible');
+    });
+    p.addEventListener('mouseleave', () => {
+      fueraTimer = setTimeout(()=>fondoPais.classList.remove('visible'), 250);
+    });
+    // táctil: tap muestra la imagen
+    p.addEventListener('click', () => {
+      fondoPais.style.backgroundImage = `url('${url}')`;
+      fondoPais.classList.add('visible');
+      clearTimeout(fueraTimer);
+      fueraTimer = setTimeout(()=>fondoPais.classList.remove('visible'), 2500);
+    });
+  });
 
   // ---------- Revelado al hacer scroll ----------
   const io = new IntersectionObserver(es=>{
