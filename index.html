@@ -128,13 +128,33 @@
     font-size:clamp(42px,6.6vw,96px);font-weight:300;line-height:1.06;
     letter-spacing:-.02em;margin:34px 0 30px;max-width:16ch;
   }
-  .rotor{display:inline-block;position:relative;font-weight:600;color:#fff;min-width:7ch}
-  .rotor span{
-    position:absolute;left:0;top:0;opacity:0;transform:translateY(14px);
-    transition:opacity .5s,transform .5s;white-space:nowrap;
+  /* --- fondos del slider --- */
+  .hero-fondos{position:absolute;inset:0;z-index:0}
+  .capa{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}
+  .capa.activa{opacity:1}
+  .capa .poster,.capa video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  /* --- texto del slide --- */
+  .palabra{
+    display:inline-block;position:relative;font-weight:600;color:#fff;min-width:7ch;
+    transition:opacity .45s ease,transform .45s ease;
   }
-  .rotor span.activa{opacity:1;transform:none;position:relative}
-  .rotor::after{content:"";position:absolute;left:0;bottom:-6px;width:100%;height:3px;background:var(--rojo);border-radius:3px}
+  .palabra::after{content:"";position:absolute;left:0;bottom:-6px;width:100%;height:3px;background:var(--rojo);border-radius:3px}
+  #heroSub{transition:opacity .45s ease,transform .45s ease}
+  .cambiando{opacity:0;transform:translateY(12px)}
+  /* --- barras de progreso --- */
+  .progresos{display:flex;gap:12px;margin-top:54px;position:relative;z-index:2}
+  .prog{
+    width:76px;height:3px;background:rgba(255,255,255,.28);border-radius:3px;
+    overflow:hidden;cursor:pointer;transition:background .3s;
+  }
+  .prog:hover{background:rgba(255,255,255,.5)}
+  .prog i{display:block;height:100%;width:0;background:var(--rojo)}
+  .prog.activa i{animation:cargaProg var(--dur,8s) linear forwards}
+  @keyframes cargaProg{to{width:100%}}
+  @media (prefers-reduced-motion: reduce){
+    .prog.activa i{animation:none;width:100%}
+    .capa{transition:none}
+  }
   .hero p{max-width:540px;font-size:17.5px;color:rgba(255,255,255,.78);margin-bottom:46px;font-weight:400}
   .hero-links{display:flex;gap:34px;align-items:center;flex-wrap:wrap}
   .link-luz{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:#fff;border-bottom:2px solid rgba(255,255,255,.35);padding-bottom:6px;transition:border-color .3s}
@@ -358,26 +378,40 @@
 </div>
 
 <!-- ================= HERO ================= -->
-<section class="hero" style="padding-top:0">
-  <div class="poster"></div>
-  <video autoplay muted loop playsinline poster="https://images.pexels.com/videos/7025003/city-construction-site-day-metropolis-7025003.jpeg?auto=compress&cs=tinysrgb&w=1600">
-    <source src="https://videos.pexels.com/video-files/7025003/7025003-hd_1920_1080_25fps.mp4" type="video/mp4">
-    <source src="https://videos.pexels.com/video-files/7025003/7025003-uhd_2732_1440_25fps.mp4" type="video/mp4">
-  </video>
+<section class="hero" style="padding-top:0" id="hero">
+  <div class="hero-fondos">
+    <div class="capa activa">
+      <img class="poster" src="https://images.pexels.com/videos/7025003/city-construction-site-day-metropolis-7025003.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="">
+      <video muted loop playsinline preload="auto" poster="https://images.pexels.com/videos/7025003/city-construction-site-day-metropolis-7025003.jpeg?auto=compress&cs=tinysrgb&w=1600">
+        <source src="https://videos.pexels.com/video-files/7025003/7025003-hd_1920_1080_25fps.mp4" type="video/mp4">
+        <source src="https://videos.pexels.com/video-files/7025003/7025003-uhd_2732_1440_25fps.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="capa">
+      <img class="poster" src="https://images.pexels.com/videos/3689303/building-constructing-construction-fast-paced-video-3689303.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="">
+      <video muted loop playsinline preload="metadata" poster="https://images.pexels.com/videos/3689303/building-constructing-construction-fast-paced-video-3689303.jpeg?auto=compress&cs=tinysrgb&w=1600">
+        <source src="https://videos.pexels.com/video-files/3689303/3689303-hd_1920_1080_30fps.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="capa">
+      <img class="poster" src="https://images.pexels.com/videos/6164052/pexels-photo-6164052.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="">
+      <video muted loop playsinline preload="metadata" poster="https://images.pexels.com/videos/6164052/pexels-photo-6164052.jpeg?auto=compress&cs=tinysrgb&w=1600">
+        <source src="https://videos.pexels.com/video-files/6164052/6164052-hd_1920_1080_30fps.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
   <div class="wrap">
     <div class="sello reveal in">★ 43 años de trayectoria</div>
-    <h1 class="reveal in">Construimos<br>
-      <span class="rotor" id="rotor">
-        <span class="activa">infraestructura</span>
-        <span>industria</span>
-        <span>comunidades</span>
-        <span>futuro</span>
-      </span>
-    </h1>
-    <p class="reveal in">Un grupo empresarial dominicano que impulsa el desarrollo de El Caribe y Centroamérica con un ecosistema integrado de construcción, acero, cemento y desarrollo inmobiliario.</p>
+    <h1 class="reveal in">Construimos<br><span class="palabra" id="heroPalabra">infraestructura</span></h1>
+    <p class="reveal in" id="heroSub">Obras viales y de conectividad que favorecen el desarrollo de El Caribe y Centroamérica.</p>
     <div class="hero-links reveal in">
       <a class="btn blanco" href="#portafolio">Conozca el grupo</a>
       <a class="link-luz" href="#proyectos">Proyectos destacados</a>
+    </div>
+    <div class="progresos" id="progresos" aria-label="Cambiar diapositiva">
+      <span class="prog activa" role="button" tabindex="0"><i></i></span>
+      <span class="prog" role="button" tabindex="0"><i></i></span>
+      <span class="prog" role="button" tabindex="0"><i></i></span>
     </div>
   </div>
 </section>
@@ -659,16 +693,72 @@
   document.getElementById('abrirMovil').addEventListener('click', ()=>movil.classList.add('abierto'));
   document.getElementById('cerrarMovil').addEventListener('click', ()=>movil.classList.remove('abierto'));
 
-  // ---------- Palabra rotativa del hero (estilo Acciona) ----------
-  const rotor = document.querySelectorAll('#rotor span');
-  let ri = 0;
+  // ---------- Hero slider: texto + video sincronizados ----------
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(!reduceMotion && rotor.length){
-    setInterval(()=>{
-      rotor[ri].classList.remove('activa');
-      ri = (ri+1) % rotor.length;
-      rotor[ri].classList.add('activa');
-    }, 2800);
+  const DUR = 8000; // duración de cada slide
+  const slides = [
+    {palabra:"infraestructura", sub:"Obras viales y de conectividad que favorecen el desarrollo de El Caribe y Centroamérica."},
+    {palabra:"industria",       sub:"Cemento, acero, concreto y laminados: un ecosistema industrial verticalmente integrado."},
+    {palabra:"futuro",          sub:"43 años edificando comunidades, oportunidades y progreso sostenible en toda la región."}
+  ];
+  const capas  = [...document.querySelectorAll('.capa')];
+  const progs  = [...document.querySelectorAll('.prog')];
+  const hPal   = document.getElementById('heroPalabra');
+  const hSub   = document.getElementById('heroSub');
+  const hero   = document.getElementById('hero');
+  let idxSlide = 0, timerSlide = null, heroVisible = true;
+
+  const videoDe = c => c.querySelector('video');
+
+  function pintarSlide(n, auto=true){
+    if(n === idxSlide && auto === false) return;
+    // texto: fade out -> swap -> fade in
+    hPal.classList.add('cambiando'); hSub.classList.add('cambiando');
+    setTimeout(()=>{
+      hPal.textContent = slides[n].palabra;
+      hSub.textContent = slides[n].sub;
+      hPal.classList.remove('cambiando'); hSub.classList.remove('cambiando');
+    }, 460);
+    // fondos: crossfade + play/pause
+    capas.forEach((c,i)=>{
+      c.classList.toggle('activa', i===n);
+      const v = videoDe(c);
+      if(!v || reduceMotion) return;
+      if(i===n && heroVisible){ v.play().catch(()=>{}); }
+      else { v.pause(); }
+    });
+    // barras: reiniciar animación de la activa
+    progs.forEach((p,i)=>{
+      p.classList.remove('activa');
+      if(i===n){ void p.offsetWidth; /* reflow para reiniciar keyframes */ p.style.setProperty('--dur', DUR+'ms'); p.classList.add('activa'); }
+    });
+    idxSlide = n;
+    clearTimeout(timerSlide);
+    if(!reduceMotion) timerSlide = setTimeout(()=>pintarSlide((idxSlide+1)%slides.length), DUR);
+  }
+
+  progs.forEach((p,i)=>{
+    p.addEventListener('click', ()=>pintarSlide(i));
+    p.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pintarSlide(i);} });
+  });
+
+  // pausar todo cuando el hero sale de pantalla (rendimiento)
+  new IntersectionObserver(es=>{
+    heroVisible = es[0].isIntersecting;
+    capas.forEach((c,i)=>{
+      const v = videoDe(c); if(!v) return;
+      if(heroVisible && i===idxSlide && !reduceMotion) v.play().catch(()=>{});
+      else v.pause();
+    });
+  },{threshold:.15}).observe(hero);
+
+  if(!reduceMotion){
+    videoDe(capas[0])?.play().catch(()=>{});
+    timerSlide = setTimeout(()=>pintarSlide(1), DUR);
+    // precargar los otros videos tras la carga inicial
+    window.addEventListener('load', ()=>setTimeout(()=>{
+      capas.slice(1).forEach(c=>{ const v=videoDe(c); if(v){ v.preload='auto'; v.load(); } });
+    }, 2500));
   }
 
   // ---------- Contadores (estilo VINCI) ----------
