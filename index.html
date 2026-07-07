@@ -226,20 +226,31 @@
   /* ================= PORTAFOLIO (Techint) ================= */
   .portafolio{background:var(--blanco)}
   .cabeza{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:60px}
-  .logo-muro{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--linea);border-left:1px solid var(--linea)}
+  .logo-muro{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
   .celda{
-    position:relative;border-right:1px solid var(--linea);border-bottom:1px solid var(--linea);
+    position:relative;border-radius:18px;background:#fff;
     min-height:168px;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:0;padding:26px 28px;transition:background .4s;text-align:center;overflow:hidden;
+    gap:0;padding:26px 28px;text-align:center;overflow:hidden;
+    --acento:var(--rojo);
+    border:1.5px solid color-mix(in srgb, var(--acento) 26%, var(--linea));
+    box-shadow:0 12px 28px -18px rgba(13,15,18,.14);
+    transition:border-color .35s,box-shadow .35s,transform .35s;
   }
-  .celda:hover{background:var(--hueso)}
+  .celda:nth-child(3n+2){--acento:var(--verde)}
+  .celda:nth-child(3n){--acento:var(--azul)}
+  .celda:hover{
+    border-color:color-mix(in srgb, var(--acento) 55%, var(--linea));transform:translateY(-5px);
+    box-shadow:0 22px 42px -20px rgba(13,15,18,.24);
+  }
+  .celda:hover .wm .sobre{color:var(--acento)}
+  .celda .estrellita path{fill:var(--acento)}
+  .celda .mini-btn{background:var(--acento)}
   .wm{
     font-family:'Oswald',sans-serif;text-transform:uppercase;color:#9B9B9B;
     line-height:1;transition:color .4s,transform .45s cubic-bezier(.3,.7,.3,1);
   }
   .celda:hover .wm{color:var(--tinta);transform:translateY(-8px)}
   .wm .sobre{display:block;font-size:10px;letter-spacing:.34em;font-weight:600;color:#BDBDBD;margin-bottom:6px;transition:color .4s}
-  .celda:hover .wm .sobre{color:var(--rojo)}
   .wm .nombre{font-size:26px;font-weight:600;letter-spacing:.13em}
   .celda .hover-info{
     display:flex;flex-direction:column;align-items:center;gap:16px;
@@ -265,24 +276,36 @@
   }
 
   /* ================= PRESENCIA (Webuild) ================= */
-  .presencia{background:var(--hueso);color:var(--tinta);padding:100px 0;position:relative;overflow:hidden}
+  .presencia{background:var(--blanco);color:var(--tinta);padding:110px 0;position:relative}
+  .presencia .panel{
+    position:relative;overflow:hidden;border-radius:28px;color:#fff;
+    background:linear-gradient(135deg,#17729F 0%,#115E86 55%,#0C4A6B 100%);
+    padding:76px 70px;display:grid;grid-template-columns:1fr 1.4fr;gap:70px;align-items:center;
+    box-shadow:0 34px 70px -34px rgba(12,74,107,.45);
+  }
+  .presencia .panel::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420' viewBox='0 0 420 420' fill='none'%3E%3Cpath d='M-20 90 C80 40 160 150 260 100 S420 60 460 110' stroke='rgba(255,255,255,0.07)' stroke-width='1.2'/%3E%3Cpath d='M-20 150 C90 100 170 210 270 160 S430 120 470 170' stroke='rgba(255,255,255,0.055)' stroke-width='1.2'/%3E%3Cpath d='M-20 215 C85 165 175 275 275 225 S425 185 465 235' stroke='rgba(255,255,255,0.07)' stroke-width='1.2'/%3E%3Cpath d='M-20 280 C95 230 165 340 265 290 S435 250 475 300' stroke='rgba(255,255,255,0.055)' stroke-width='1.2'/%3E%3Cpath d='M-20 345 C90 295 180 405 280 355 S430 315 470 365' stroke='rgba(255,255,255,0.07)' stroke-width='1.2'/%3E%3C/svg%3E");background-size:420px 420px;
+  }
   .presencia-fondo{
     position:absolute;inset:0;background-size:cover;background-position:center;
-    opacity:.16;transition:opacity .7s ease;pointer-events:none;
-    filter:saturate(.85);
+    opacity:0;transition:opacity .7s ease;pointer-events:none;
+    filter:saturate(.8) contrast(1.05);mix-blend-mode:multiply;
   }
-  .presencia-fondo.cambiando{opacity:0}
-  .presencia .wrap{display:grid;grid-template-columns:1fr 1.4fr;gap:70px;align-items:center;position:relative;z-index:2}
+  .presencia-fondo.visible{opacity:.55}
+  .presencia .panel > div:not(.presencia-fondo){position:relative;z-index:2}
+  .presencia .tag{color:rgba(255,255,255,.7)}
+  .presencia .tag::before{background:#fff}
   .presencia h2{font-size:clamp(26px,3vw,40px);font-weight:300;line-height:1.2;margin-top:22px}
   .presencia h2 b{font-weight:600}
   .paises{display:flex;flex-wrap:wrap;gap:12px}
   .pais{
-    font-size:13.5px;font-weight:500;padding:12px 22px;border:1.5px solid var(--linea);
-    border-radius:999px;color:var(--gris);transition:all .3s;cursor:pointer;background:rgba(255,255,255,.6);
+    font-size:13.5px;font-weight:500;padding:12px 22px;border:1.5px solid rgba(255,255,255,.38);
+    border-radius:999px;color:rgba(255,255,255,.88);transition:all .3s;cursor:pointer;background:rgba(255,255,255,.08);
   }
-  .pais:hover{border-color:var(--rojo);color:var(--tinta);transform:translateY(-2px);background:#fff}
-  .pais.base{background:var(--rojo);border-color:var(--rojo);color:#fff;font-weight:600}
-  @media(max-width:900px){.presencia .wrap{grid-template-columns:1fr;gap:40px}}
+  .pais:hover{border-color:#fff;color:#fff;transform:translateY(-2px);background:rgba(255,255,255,.16)}
+  .pais.base{background:#fff;border-color:#fff;color:#0C4A6B;font-weight:600}
+  @media(max-width:900px){.presencia .panel{grid-template-columns:1fr;gap:40px;padding:50px 32px}}
 
   /* ================= PROYECTOS (Webuild / Grupo Argos) ================= */
   .proyectos{background:var(--hueso)}
@@ -349,7 +372,8 @@
   .noticia a{font-size:16px;line-height:1.45;font-weight:500;transition:color .3s}
   .noticia a:hover{color:var(--rojo)}
   @media(max-width:560px){.noticia{grid-template-columns:88px 1fr;gap:16px}.noticia .mini{width:88px;height:62px}}
-  .inv-caja{background:var(--hueso);border-radius:20px;border-top:4px solid var(--azul);padding:44px;height:fit-content}
+  .inv-caja{background:var(--hueso);border-radius:20px;border:1.5px solid var(--linea);padding:44px;height:fit-content;transition:border-color .35s}
+  .inv-caja:hover{border-color:rgba(20,110,160,.4)}
   .inv-caja .tag::before{background:var(--azul)}
   .inv-caja p{font-size:14px;color:var(--gris);margin:18px 0 26px}
   .inv-caja .lista a{
@@ -621,14 +645,15 @@
 
 <!-- ================= PRESENCIA ================= -->
 <section class="presencia">
-  <div class="presencia-fondo" id="presenciaFondo" style="background-image:url('https://images.pexels.com/photos/21920140/pexels-photo-21920140.jpeg?auto=compress&cs=tinysrgb&w=1400')"></div>
   <div class="wrap">
-    <div class="reveal">
+   <div class="panel reveal">
+    <div class="presencia-fondo" id="presenciaFondo" style="background-image:url('https://images.pexels.com/photos/21920140/pexels-photo-21920140.jpeg?auto=compress&cs=tinysrgb&w=1400')"></div>
+    <div>
       <div class="tag">Presencia regional</div>
       <h2>Desde Santiago hacia <b>El Caribe y Centroamérica</b></h2>
-      <p style="color:var(--gris);margin-top:18px;font-size:15px">Oficinas corporativas en Santiago y Santo Domingo. Plantas de producción en San Pedro de Macorís, San Cristóbal, Bávaro, Villa Vásquez y Villa González.</p>
+      <p style="color:rgba(255,255,255,.72);margin-top:18px;font-size:15px">Oficinas corporativas en Santiago y Santo Domingo. Plantas de producción en San Pedro de Macorís, San Cristóbal, Bávaro, Villa Vásquez y Villa González.</p>
     </div>
-    <div class="paises reveal">
+    <div class="paises">
       <span class="pais base" data-img="https://images.pexels.com/photos/21920140/pexels-photo-21920140.jpeg?auto=compress&cs=tinysrgb&w=1400">República Dominicana</span>
       <span class="pais" data-img="https://images.pexels.com/photos/26628629/pexels-photo-26628629.jpeg?auto=compress&cs=tinysrgb&w=1400">Haití</span>
       <span class="pais" data-img="https://images.pexels.com/photos/18185251/pexels-photo-18185251.jpeg?auto=compress&cs=tinysrgb&w=1400">Panamá</span>
@@ -638,6 +663,7 @@
       <span class="pais" data-img="https://images.pexels.com/photos/12858513/pexels-photo-12858513.jpeg?auto=compress&cs=tinysrgb&w=1400">Jamaica</span>
       <span class="pais" data-img="https://images.pexels.com/photos/1482193/pexels-photo-1482193.jpeg?auto=compress&cs=tinysrgb&w=1400">Tórtola</span>
     </div>
+   </div>
   </div>
 </section>
 
@@ -894,29 +920,27 @@
   const pills = [...document.querySelectorAll('.pais')];
   let paisSel = pills.find(p => p.classList.contains('base')) || pills[0];
 
+  let fondoActivo = false; // el panel inicia en azul puro
   const mostrarPais = url => {
     if(!url) return;
-    fondoPais.classList.add('cambiando');
+    fondoPais.classList.remove('visible');
     setTimeout(()=>{
       fondoPais.style.backgroundImage = `url('${url}')`;
-      fondoPais.classList.remove('cambiando');
-    }, 350);
+      fondoPais.classList.add('visible');
+    }, fondoActivo ? 380 : 60);
+    fondoActivo = true;
   };
 
   pills.forEach(p => {
     const url = p.dataset.img;
     if(url){ const pre = new Image(); pre.src = url; } // precarga
-    // clic: queda seleccionado (rojo) y su imagen fija de fondo
+    // clic: queda seleccionado y aparece su imagen multiplicada sobre el azul
     p.addEventListener('click', () => {
-      if(p === paisSel) return;
       paisSel.classList.remove('base');
       p.classList.add('base');
       paisSel = p;
       mostrarPais(url);
     });
-    // hover: vista previa; al salir vuelve la imagen del seleccionado
-    p.addEventListener('mouseenter', () => { if(p !== paisSel) mostrarPais(url); });
-    p.addEventListener('mouseleave', () => { if(p !== paisSel) mostrarPais(paisSel.dataset.img); });
   });
 
   // ---------- Revelado al hacer scroll ----------
